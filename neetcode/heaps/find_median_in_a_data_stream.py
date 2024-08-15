@@ -3,15 +3,30 @@ import heapq
 class MedianFinder:
 
     def __init__(self):
-        self.nums = []        
+        self.maxHeap = [] # stores bottom half of nums
+        self.minHeap = [] # stores top half of nums
 
     def addNum(self, num: int) -> None:
-        heapq.heappush(self.nums, num)
+        
+        if len(self.maxHeap) == 0:
+            heapq.heappush(self.maxHeap, -num)
+        elif num > -self.maxHeap[0]:
+            heapq.heappush(self.minHeap, num)
+        else:
+            heapq.heappush(self.maxHeap, -num)
+
+        if (len(self.maxHeap) > len(self.minHeap) + 1):
+            top = heapq.heappop(self.maxHeap)
+            heapq.heappush(self.minHeap, -top)
+        elif (len(self.minHeap) > len(self.maxHeap) + 1):
+            top = heapq.heappop(self.minHeap)
+            heapq.heappush(self.maxHeap, -top)
 
     def findMedian(self) -> float:
-        if len(self.nums) % 2 == 0:
-            nums = heapq.nsmallest((len(self.nums) // 2) + 1, self.nums)
-            return (nums[-1] + nums[-2]) / 2
+        if (len(self.maxHeap) > len(self.minHeap)):
+            return -self.maxHeap[0]
+        elif (len(self.minHeap) > len(self.maxHeap)):
+            return self.minHeap[0]
         else:
-            return heapq.nsmallest((len(self.nums) // 2) + 1, self.nums)[-1]
+            return (-self.maxHeap[0] + self.minHeap[0]) / 2
         
