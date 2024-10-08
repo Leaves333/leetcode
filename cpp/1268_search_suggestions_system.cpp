@@ -51,19 +51,20 @@ public:
 
 private:
 	void dfs(TrieNode* root, vector<string> *ans, string *cur) {
-		if (root->isWord) {
-			ans->push_back(*cur);
-		}
 		if (ans->size() >= 3) {
 			return;
+		}
+		if (root->isWord) {
+			ans->push_back(*cur);
 		}
 
 		for (char c = 'a'; c <= 'z'; c++) {
 			if (root->arr[c - 'a'] != 0) {
-				cur += c;
+				*cur += c;
 				dfs(root->arr[c - 'a'], ans, cur);
 				cur->pop_back();
 			}
 		}
+		
 	}
 };
