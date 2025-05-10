@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type BSTIterator struct {
 	stack []*TreeNode
 }

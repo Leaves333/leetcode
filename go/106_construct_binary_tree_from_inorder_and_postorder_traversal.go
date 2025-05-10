@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func buildTree(inorder []int, postorder []int) *TreeNode {
 
 	if len(postorder) == 0 {
